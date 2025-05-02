@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "272227444622",
+    "project_id": "popcart-17496",
+    "storage_bucket": "popcart-17496.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272227444622:android:018176256c577f3f0426df",
+        "android_client_info": {
+          "package_name": "com.akj.popcart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqiKubnl-HU4U6VZZ03r3NnqhCeIjqY9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

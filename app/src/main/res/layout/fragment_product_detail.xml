@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardProdImage"
+            android:layout_width="0dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/viewPagerProductImages" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/closeImage"
+                android:src="@drawable/close"
+                android:padding="5dp"
+                app:tint="@color/g_black"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/linearProd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="35dp"
+            app:layout_constraintTop_toBottomOf="@id/cardProdImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:id="@+id/ProdName"
+                style="@style/h3"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Product Name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/h3"
+                android:layout_weight="1"
+                android:text="₹ 0000"
+                android:textColor="@color/g_gray700"
+                android:id="@+id/ProdPrice"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ProdDescrip"
+            style="@style/h3"
+            android:layout_width="348dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:text="Product Description"
+            android:textColor="@color/g_gray700"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.072"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearProd" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/g_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ProdDescrip"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/LinearProdPref"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/line"
+            app:layout_constraintEnd_toEndOf="@id/line"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp">
+
+                <TextView
+                    android:id="@+id/prodColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/h3"
+                    android:textColor="@color/black"
+                    android:text="Color"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Colors"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/prodSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/h3"
+                    android:textColor="@color/black"
+                    android:text="Size"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Sizes"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/AddToCartBtn"
+            style="@style/blueButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="20dp"
+            android:text="Add To Cart"
+            android:visibility="visible"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/LinearProdPref"
+            app:layout_constraintStart_toStartOf="@id/LinearProdPref"
+            app:layout_constraintTop_toBottomOf="@id/LinearProdPref"
+            app:spinning_bar_color="@color/white"/>
+
+        <TextView
+            android:id="@+id/AddToCartTv"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:background="@drawable/grey_background"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="20dp"
+            android:text="Added To Cart"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/LinearProdPref"
+            app:layout_constraintStart_toStartOf="@id/LinearProdPref"
+            app:layout_constraintTop_toBottomOf="@id/LinearProdPref"
+            app:spinning_bar_color="@color/white"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

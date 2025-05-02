@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blury_background">
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="294dp"
+        android:layout_height="290dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/popcart_high_resolution_logo_noback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/slogan1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppins_thin"
+        android:text="Where Luxury Meets \nSimplicity"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h3TextSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <TextView
+        android:id="@+id/slogan2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/poppins_light"
+        android:text="Transform Your Shopping\nRoutine With PopCart"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/h2TextSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slogan1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonRegisterAccountOptions"
+        style="@style/blueButtonStyle"
+        android:layout_width="130dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="50dp"
+        android:text="Register"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slogan2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLoginAccountOptions"
+        style="@style/whiteButtonStyle"
+        android:layout_width="130dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="5dp"
+        android:text="Login"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegisterAccountOptions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

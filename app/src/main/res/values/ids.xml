@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="progressbarAddress" type="id" />
+    <item name="guideline2" type="id" />
+    <item name="guideline1" type="id" />
+    <item name="buttonSave" type="id" />
+    <item name="buttonDelelte" type="id" />
+    <item name="edStreet" type="id" />
+    <item name="edPhone" type="id" />
+    <item name="edState" type="id" />
+    <item name="edCity" type="id" />
+    <item name="edFullName" type="id" />
+    <item name="edAddressTitle" type="id" />
+    <item name="topLine" type="id" />
+    <item name="tvPaymentMethods" type="id" />
+    <item name="imageAddressClose" type="id" />
+    <item name="toolbarAddresses" type="id" />
+</resources>
