@@ -69,10 +69,7 @@ class BillingFragment : Fragment() {
 //    private val clientID= "AWKYIBhYkTUDj-NJPxmgEfNLk4UEQ5z6VZ8LPGPfnLH5z2a7pIjgeJMhwiWXSPpBsJiQzqYlGbRZAsXf"
 //    private val secretID= "EMG45Ricd253pHZw9NHnJiihDwD-5x7fobcSotuRzD1XgfKUDKpKP9TusgN-1OXRcyxv8KwAx31J8WjQ"
 
-    private val clientID= "AWKYIBhYkTUDj-NJPxmgEfNLk4UEQ5z6VZ8LPGPfnLH5z2a7pIjgeJMhwiWXSPpBsJiQzqYlGbRZAsXf"
-    private val secretID= "EMG45Ricd253pHZw9NHnJiihDwD-5x7fobcSotuRzD1XgfKUDKpKP9TusgN-1OXRcyxv8KwAx31J8WjQ"
-    private val returnUrl="com.akj.popcart://paypalpay"
-    var accessToken = ""
+    
     private lateinit var uniqueId: String
     private var orderid = ""
 
@@ -299,166 +296,14 @@ class BillingFragment : Fragment() {
     }
 
 
-    private fun handlerOrderID(orderID: String) {
-        val config = CoreConfig(clientID, environment = Environment.SANDBOX)
-        val payPalWebCheckoutClient = PayPalWebCheckoutClient(requireActivity(), config, returnUrl)
-        payPalWebCheckoutClient.listener = object : PayPalWebCheckoutListener {
-            override fun onPayPalWebSuccess(result: PayPalWebCheckoutResult) {
-                Log.d(TAG, "onPayPalWebSuccess: $result")
-                val order = Order(
-                    OrderStatus.Ordered.status,
-                    totalPrice,
-                    products,
-                    selectedAddress!!,
-                    selectedPaymentMethod!!
-                )
-                orderViewModel.placeOrder(order)
+  
 
-                // Show success message
-                Snackbar.make(requireView(), "Payment Successful and Order Placed", Snackbar.LENGTH_LONG).show()
-                findNavController().navigateUp()
-            }
+    
 
-            override fun onPayPalWebFailure(error: PayPalSDKError) {
-                Log.d(TAG, "onPayPalWebFailure: $error")
-            }
-
-            override fun onPayPalWebCanceled() {
-                Log.d(TAG, "onPayPalWebCanceled: ")
-            }
-        }
-
-        orderid = orderID
-        val payPalWebCheckoutRequest =
-            PayPalWebCheckoutRequest(orderID, fundingSource = PayPalWebCheckoutFundingSource.PAYPAL)
-        payPalWebCheckoutClient.start(payPalWebCheckoutRequest)
-
-    }
-
-    private fun startOrder() {
-        uniqueId = UUID.randomUUID().toString()
-
-        val orderRequestJson = JSONObject().apply {
-            put("intent", "CAPTURE")
-            put("purchase_units", JSONArray().apply {
-                put(JSONObject().apply {
-                    put("reference_id", uniqueId)
-                    put("amount", JSONObject().apply {
-                        put("currency_code", "USD")
-//                        val totalPrice = intent.getFloatExtra("totalPrice", 0f)
-                        put("value",totalPrice )
-                    })
-                })
-            })
-            put("payment_source", JSONObject().apply {
-                put("paypal", JSONObject().apply {
-                    put("experience_context", JSONObject().apply {
-                        put("payment_method_preference", "IMMEDIATE_PAYMENT_REQUIRED")
-                        put("brand_name", "POPCART")
-                        put("locale", "en-US")
-                        put("landing_page", "LOGIN")
-                        put("shipping_preference", "NO_SHIPPING")
-                        put("user_action", "PAY_NOW")
-                        put("return_url", returnUrl)
-                        put("cancel_url", "https://example.com/cancelUrl")
-                    })
-                })
-            })
-        }
-
-        AndroidNetworking.post("https://api-m.sandbox.paypal.com/v2/checkout/orders")
-            .addHeaders("Authorization", "Bearer $accessToken")
-            .addHeaders("Content-Type", "application/json")
-            .addHeaders("PayPal-Request-Id", uniqueId)
-            .addJSONObjectBody(orderRequestJson)
-            .setPriority(Priority.HIGH)
-            .build()
-            .getAsJSONObject(object : JSONObjectRequestListener {
-                override fun onResponse(response: JSONObject) {
-                    Log.d(TAG, "Order Response : " + response.toString())
-                    handlerOrderID(response.getString("id"))
-                }
-
-                override fun onError(error: ANError) {
-                    Log.d(
-                        TAG,
-                        "Order Error : ${error.message} || ${error.errorBody} || ${error.response}"
-                    )
-                }
-            })
-    }
-
-    private fun fetchAccessToken() {
-        val authString = "$clientID:$secretID"
-        val encodedAuthString = Base64.encodeToString(authString.toByteArray(), Base64.NO_WRAP)
-
-        AndroidNetworking.post("https://api-m.sandbox.paypal.com/v1/oauth2/token")
-            .addHeaders("Authorization", "Basic $encodedAuthString")
-            .addHeaders("Content-Type", "application/x-www-form-urlencoded")
-            .addBodyParameter("grant_type", "client_credentials")
-            .setPriority(Priority.HIGH)
-            .build()
-            .getAsJSONObject(object : JSONObjectRequestListener {
-                override fun onResponse(response: JSONObject) {
-                    accessToken = response.getString("access_token")
-                    Log.d(TAG, accessToken)
+    
 
 
-
-
-                }
-
-                override fun onError(error: ANError) {
-                    Log.d(TAG, error.errorBody)
-                    Toast.makeText(requireContext(), "Error Occurred!", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val intent = requireActivity().intent // Get the intent from the activity
-        Log.d(TAG, "onResume: $intent")
-
-        intent?.data?.let { data ->
-            Log.d(TAG, "Received data: $data")
-            val opType = data.getQueryParameter("opType")
-            Log.d(TAG, "Operation Type: $opType")
-            when (opType) {
-                "payment" -> captureOrder(orderid)
-                "cancel" -> {
-                    Toast.makeText(requireContext(), "Payment Cancelled", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Log.d(TAG, "Unknown operation type: $opType")
-                }
-            }
-        } ?: Toast.makeText(requireContext(),"No intent data received",Toast.LENGTH_SHORT).show()
-
-    }
-
-
-    private fun captureOrder(orderID: String) {
-        AndroidNetworking.post("https://api-m.sandbox.paypal.com/v2/checkout/orders/$orderID/capture")
-            .addHeaders("Authorization", "Bearer $accessToken")
-            .addHeaders("Content-Type", "application/json")
-            .addJSONObjectBody(JSONObject()) // Empty body
-            .setPriority(Priority.HIGH)
-            .build()
-            .getAsJSONObject(object : JSONObjectRequestListener {
-                override fun onResponse(response: JSONObject) {
-                    Log.d(TAG, "Capture Response : ${response.toString()}")
-                    Toast.makeText(requireContext(), "Payment Successful", Toast.LENGTH_SHORT).show()
-
-                }
-
-                override fun onError(error: ANError) {
-                    Log.e(TAG, "Capture Error : ${error.errorDetail}")
-                    Toast.makeText(requireContext(), "Payment Capture Failed", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }
+    
 
 
     companion object {
